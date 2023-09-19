@@ -1,8 +1,8 @@
-import "../../index.css";
+import "../styles/index.css";
 
 import { NavLink, Link } from "react-router-dom";
 
-import logo from "../../assets/argentBankLogo.png";
+import logo from "../assets/argentBankLogo.png";
 
 function Header() {
   return (
