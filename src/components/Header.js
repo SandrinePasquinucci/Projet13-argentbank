@@ -29,8 +29,7 @@ function Header() {
       });
     }
   });
-  console.log(token);
-  console.log(localStorage.getItem("token"));
+
   return (
     <nav className="main-nav">
       <Link className="main-nav-logo" to="/">
