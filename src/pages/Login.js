@@ -8,17 +8,19 @@ import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Login() {
+  const mailAuto = localStorage.getItem("userName");
+  const check = localStorage.getItem("check");
+
   // Use State
   let [loginErreur, setLoginErreur] = useState("");
   let [loginStatus, setLoginStatus] = useState(0);
 
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
-  let [remember, setRemember] = useState(false);
+  let [remember, setRemember] = useState(check);
 
   // Use Selector
   const token = useSelector((state) => state.token.value);
-  // const email = useSelector((state) => state.email.value);
 
   // Use Effect
   useEffect(() => {
@@ -30,6 +32,7 @@ function Login() {
   // Handle Submit
   const handleSubmit = (event) => {
     event.preventDefault();
+
     const login = getLogin({ email: email, password: password });
     login.then((obj) => {
       if (obj.status !== 400) {
@@ -44,6 +47,7 @@ function Login() {
   // Handle Remember
   const handleRemember = (event) => {
     setRemember(event.target.checked);
+    localStorage.setItem("check", remember);
   };
 
   // Add the token
@@ -58,10 +62,8 @@ function Login() {
     } else {
       localStorage.setItem("userName", "");
     }
-    localStorage.setItem("check", remember);
   };
-  const mailAuto = localStorage.getItem("userName");
-  const check = localStorage.getItem("check");
+  console.log(remember);
   // Redirection
   if (
     token !== 0 ||
@@ -97,7 +99,7 @@ function Login() {
             <input
               type="checkbox"
               id="remember-me"
-              checked={check}
+              checked={remember}
               onChange={handleRemember}
             />
 
