@@ -15,7 +15,7 @@ function Login() {
   let [loginErreur, setLoginErreur] = useState("");
   let [loginStatus, setLoginStatus] = useState(0);
 
-  let [email, setEmail] = useState("");
+  let [email, setEmail] = useState(mailAuto);
   let [password, setPassword] = useState("");
   let [remember, setRemember] = useState(check);
 
@@ -53,17 +53,20 @@ function Login() {
   // Add the token
   const dispatch = useDispatch();
   const ajoutToken = (token) => {
-    // if (remember === true) {
+    //if (remember === true) {
     localStorage.setItem("token", token);
     // }
     dispatch(getToken(token));
     if (remember === true) {
       localStorage.setItem("userName", email);
+      localStorage.setItem("check", 1);
     } else {
       localStorage.setItem("userName", "");
+      localStorage.setItem("check", 0);
     }
   };
-  console.log(remember);
+  console.log(mailAuto);
+  console.log(check);
   // Redirection
   if (
     token !== 0 ||
@@ -95,16 +98,17 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+
           <div className="input-remember">
             <input
               type="checkbox"
               id="remember-me"
-              checked={remember}
+              checked={check}
               onChange={handleRemember}
             />
-
             <label htmlFor="remember-me">Remember me</label>
           </div>
+
           <div>{loginErreur}</div>
           <button className="sign-in-button">Sign In</button>
         </form>
