@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function Login() {
   const mailAuto = localStorage.getItem("userName");
   const check = localStorage.getItem("check");
-
+  console.log(check);
   // Use State
   let [loginErreur, setLoginErreur] = useState("");
   let [loginStatus, setLoginStatus] = useState(0);
@@ -47,7 +47,7 @@ function Login() {
   // Handle Remember
   const handleRemember = (event) => {
     setRemember(event.target.checked);
-    localStorage.setItem("check", remember);
+    // localStorage.setItem("check", remember);
   };
 
   // Add the token
@@ -65,7 +65,7 @@ function Login() {
       localStorage.setItem("check", 0);
     }
   };
-  console.log(mailAuto);
+  console.log(remember);
   console.log(check);
   // Redirection
   if (
