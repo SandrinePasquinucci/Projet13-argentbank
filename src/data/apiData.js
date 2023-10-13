@@ -20,7 +20,6 @@ export function getLoginData(data) {
 
 /* Get Login Fetch */
 export function getLoginFetchData(data) {
-  console.log(data);
   if (data.body !== undefined) {
     const obj = {
       status: data.status,

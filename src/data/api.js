@@ -28,7 +28,7 @@ export const getLoginFetch = async (token) => {
     method: "POST",
   }).then((response) => response.json());
 
-  console.clear();
+  // console.clear();
   return await getLoginFetchData(loginFetchResponse);
 };
 

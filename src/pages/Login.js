@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { getLogin } from "../data/api";
 import { getToken } from "../reducers/token";
 import { Navigate } from "react-router-dom";
-
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -19,6 +18,7 @@ function Login() {
 
   // Use Selector
   const token = useSelector((state) => state.token.value);
+  // const email = useSelector((state) => state.email.value);
 
   // Use Effect
   useEffect(() => {
@@ -31,7 +31,6 @@ function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const login = getLogin({ email: email, password: password });
-
     login.then((obj) => {
       if (obj.status !== 400) {
         setLoginStatus(obj.status);
@@ -50,12 +49,19 @@ function Login() {
   // Add the token
   const dispatch = useDispatch();
   const ajoutToken = (token) => {
-    if (remember === true) {
-      localStorage.setItem("token", token);
-    }
+    // if (remember === true) {
+    localStorage.setItem("token", token);
+    // }
     dispatch(getToken(token));
+    if (remember === true) {
+      localStorage.setItem("userName", email);
+    } else {
+      localStorage.setItem("userName", "");
+    }
+    localStorage.setItem("check", remember);
   };
-
+  const mailAuto = localStorage.getItem("userName");
+  const check = localStorage.getItem("check");
   // Redirection
   if (
     token !== 0 ||
@@ -65,9 +71,8 @@ function Login() {
     return <Navigate to="/profile" />;
 
   return (
-    <main className="main bg-dark">
+    <main className="bg-dark">
       <section className="sign-in-content">
-        <i className="fa fa-user-circle sign-in-icon"></i>
         <FontAwesomeIcon icon={faCircleUser} className="sign-in-icon" />
         <h1>Sign In</h1>
         <form onSubmit={handleSubmit}>
@@ -76,8 +81,8 @@ function Login() {
             <input
               type="text"
               id="username"
+              placeholder={mailAuto}
               onChange={(e) => setEmail(e.target.value)}
-              autoComplete="on"
             />
           </div>
           <div className="input-wrapper">
@@ -86,11 +91,16 @@ function Login() {
               type="password"
               id="password"
               onChange={(e) => setPassword(e.target.value)}
-              autoComplete="on"
             />
           </div>
           <div className="input-remember">
-            <input type="checkbox" id="remember-me" onChange={handleRemember} />
+            <input
+              type="checkbox"
+              id="remember-me"
+              checked={check}
+              onChange={handleRemember}
+            />
+
             <label htmlFor="remember-me">Remember me</label>
           </div>
           <div>{loginErreur}</div>
@@ -100,5 +110,4 @@ function Login() {
     </main>
   );
 }
-
 export default Login;
