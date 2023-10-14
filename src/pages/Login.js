@@ -10,15 +10,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function Login() {
   const mailAuto = localStorage.getItem("userName");
   const check = localStorage.getItem("check");
-  console.log(check);
+
   // Use State
   let [loginErreur, setLoginErreur] = useState("");
   let [loginStatus, setLoginStatus] = useState(0);
 
   let [email, setEmail] = useState(mailAuto);
   let [password, setPassword] = useState("");
-  let [remember, setRemember] = useState(check);
+  let [remember, setRemember] = useState("");
 
+  console.log(check);
+  console.log(remember);
   // Use Selector
   const token = useSelector((state) => state.token.value);
 
@@ -47,7 +49,6 @@ function Login() {
   // Handle Remember
   const handleRemember = (event) => {
     setRemember(event.target.checked);
-    // localStorage.setItem("check", remember);
   };
 
   // Add the token
@@ -64,9 +65,9 @@ function Login() {
       localStorage.setItem("userName", "");
       localStorage.setItem("check", 0);
     }
+    console.log(localStorage.getItem("check"));
   };
-  console.log(remember);
-  console.log(check);
+
   // Redirection
   if (
     token !== 0 ||
@@ -103,7 +104,7 @@ function Login() {
             <input
               type="checkbox"
               id="remember-me"
-              checked={check}
+              checked={remember}
               onChange={handleRemember}
             />
             <label htmlFor="remember-me">Remember me</label>
